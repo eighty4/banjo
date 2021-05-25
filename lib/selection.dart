@@ -31,13 +31,10 @@ class SongSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
           children: [
-            Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                    child: Text('Songs', style: TextStyle(fontSize: 30)))),
+            Center(child: Text('Songs', style: TextStyle(fontSize: 30))),
             ...songs.keys
                 .map((songName) => SongButton(songName, selectSong))
                 .toList()

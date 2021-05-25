@@ -1,8 +1,24 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'display.dart';
 import 'selection.dart';
+
+double appHeaderPadding() {
+  if (kIsWeb) {
+    return 0;
+  }
+  if (Platform.isAndroid) {
+    return 50;
+  }
+  if (Platform.isIOS) {
+    return 35;
+  }
+  return 0;
+}
 
 void main() {
   runApp(BanjoTabsApp());
@@ -20,7 +36,8 @@ class BanjoTabsApp extends StatelessWidget {
         child: MediaQuery(
             data: MediaQueryData(),
             child: Container(
-                padding: EdgeInsets.only(top: 50), child: BanjoTabs())));
+                padding: EdgeInsets.only(top: appHeaderPadding()),
+                child: BanjoTabs())));
   }
 }
 
