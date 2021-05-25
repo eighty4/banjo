@@ -31,38 +31,42 @@ class BanjoTabsApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Directionality(
-        textDirection: TextDirection.ltr,
-        child: MediaQuery(
-            data: MediaQueryData(),
-            child: Container(
-                padding: EdgeInsets.only(top: appHeaderPadding()),
-                child: BanjoTabs())));
-  }
-}
 
-class BanjoTabs extends StatefulWidget {
-  @override
-  State createState() {
-    return BanjoTabsState();
-  }
-}
-
-class BanjoTabsState extends State {
-  String? songName;
-
-  @override
-  Widget build(BuildContext context) {
-    if (songName == null) {
-      return SongSelection((songName) => this.setState(() {
-            this.songName = songName;
-          }));
-    } else {
-      return SongDisplay(songName as String, () {
-        this.setState(() {
-          this.songName = null;
-        });
-      });
-    }
+    return Container(
+        color: Colors.black,
+        padding: EdgeInsets.only(top: appHeaderPadding()),
+        child: WidgetsApp(
+          color: Color.fromARGB(255, 153, 101, 21),
+          textStyle: TextStyle(color: Colors.white),
+          home: SongSelection(),
+          onGenerateRoute: (settings) {
+            if (settings.name != null &&
+                settings.name!.startsWith(SongDisplayArguments.routeName)) {
+              var songName;
+              if (settings.arguments != null) {
+                final arguments = settings.arguments as SongDisplayArguments;
+                songName = arguments.songName;
+              } else {
+                final displayShowUri = Uri.parse(settings.name!);
+                songName = displayShowUri.queryParameters['songName'];
+              }
+              if (songName != null) {
+                return MaterialPageRoute(
+                    builder: (context) => SongDisplayScreen(),
+                    fullscreenDialog: true,
+                    settings: RouteSettings(
+                        name: settings.name!,
+                        arguments: SongDisplayArguments(songName)));
+              }
+            }
+            return null;
+          },
+          pageRouteBuilder: <T>(settings, builder) {
+            return MaterialPageRoute(
+                builder: builder, fullscreenDialog: true, settings: settings);
+          },
+          routes: {},
+          title: 'Banjo Tabs',
+        ));
   }
 }

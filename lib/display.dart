@@ -2,48 +2,70 @@ import 'package:flutter/material.dart';
 
 import 'model.dart';
 
+class SongDisplayArguments {
+  static const routeName = '/song';
+
+  final String songName;
+
+  SongDisplayArguments(this.songName);
+}
+
+class SongDisplayScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final route = ModalRoute.of(context);
+    if (route?.settings.arguments == null) {
+      Navigator.pushReplacementNamed(context, '/');
+    }
+    final songName =
+        (route!.settings.arguments as SongDisplayArguments).songName;
+
+    return Container(
+        color: Colors.black,
+        child: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color.fromARGB(255, 125, 0, 125),
+                              size: 40,
+                            ))),
+                    Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(songName, style: TextStyle(fontSize: 30)))
+                  ],
+                ))),
+            Expanded(child: SongDisplay(songName))
+          ],
+        ));
+  }
+}
+
 class SongDisplay extends StatelessWidget {
   static const double PADDING = 5;
   final String songName;
   final Song song;
-  final Function close;
 
-  SongDisplay(this.songName, this.close) : song = songs[songName] as Song;
+  SongDisplay(this.songName) : song = songs[songName] as Song;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      close();
-                    },
-                    child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Color.fromARGB(255, 125, 0, 125),
-                          size: 35,
-                        ))),
-                Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(songName, style: TextStyle(fontSize: 30)))
-              ],
-            ))),
-        Expanded(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          textDirection: TextDirection.ltr,
-          children: buildRows(),
-        ))
-      ],
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      textDirection: TextDirection.ltr,
+      children: buildRows(),
     );
   }
 
