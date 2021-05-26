@@ -1,0 +1,3 @@
+Currently the app displays a few measures of bluegrass banjo tabs.
+
+It's open source and available at https://github.com/eighty4/banjo.

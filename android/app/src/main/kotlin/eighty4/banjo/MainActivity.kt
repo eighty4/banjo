@@ -1,4 +1,4 @@
-package eighty4.banjo.banjo
+package eighty4.banjo
 
 import io.flutter.embedding.android.FlutterActivity
 

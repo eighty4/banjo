@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eighty4.banjo.banjo">
+    package="eighty4.banjo">
    <application
-        android:label="banjo"
+        android:label="Banjo Tabs"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

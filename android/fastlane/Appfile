@@ -1,0 +1,2 @@
+json_key_file("${HOME}/.keys/android-deploy-credentials.json")
+package_name("eighty4.banjo")
